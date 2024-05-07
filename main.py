@@ -1,16 +1,25 @@
-# This is a sample Python script.
+import pygame
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+pygame.init()
+pygame.font.init()
+font = pygame.font.SysFont('Arial', 15)
+pygame.display.set_caption("Dadish")
 
+size = (1000, 500)
+screen = pygame.display.set_mode(size)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+run = True
 
+# -------- Main Program Loop -----------
+while run:
+    # --- Main event loop
+    for event in pygame.event.get():  # User did something
+        if event.type == pygame.QUIT:  # If user clicked close
+            run = False
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    screen.fill((0, 0, 0))
+    pygame.display.update()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# Once we have exited the main program loop we can stop the game engine:
+pygame.quit()
+
