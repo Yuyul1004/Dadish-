@@ -17,10 +17,12 @@ screen = pygame.display.set_mode((screen_width, screen_length))
 bg = pygame.image.load("bg.png").convert()
 bg_width = bg.get_width()
 
-
-tiles = math.ceil(screen_width/bg_width)
+move = 0
+tiles = math.ceil(screen_width/bg_width) + 1
 print(tiles)
 
+go = False
+go_back = False
 
 run = True
 
@@ -29,9 +31,16 @@ while run:
 
     clock.tick(fps)
     for i in range(0, tiles):
-        screen.blit(bg, (i * bg_width, 0))
+        screen.blit(bg, (i * bg_width + move, 0))
 
+    if abs(move) > bg_width:
+        move = 0
 
+    if go:
+        move -=5
+
+    if go_back:
+        move +=5
 
     # --- Main event loop
     for event in pygame.event.get():# User did something
@@ -40,7 +49,20 @@ while run:
 
     #keys = pygame.key.get_pressed()
 
-        if event.type ==
+
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
+            go = True
+
+        elif event.type == pygame.KEYUP and event.key == pygame.K_d:
+            go = False
+
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
+            go_back = True
+
+        elif event.type == pygame.KEYUP and event.key == pygame.K_a:
+            go_back = False
+
+
 
 
     pygame.display.update()
