@@ -1,13 +1,16 @@
 import pygame
 import math
 
+
+
 pygame.init()
 pygame.font.init()
 font = pygame.font.SysFont('Arial', 15)
 pygame.display.set_caption("Dadish")
 
-clock = pygame.time.Clock()
-fps = 50
+player_image = pygame.image.load("DADISH_image.png")
+#clock = pygame.time.Clock()
+#fps = 50
 
 screen_width = 1000
 screen_length = 500
@@ -15,7 +18,7 @@ screen = pygame.display.set_mode((screen_width, screen_length))
 
 # load image
 bg = pygame.image.load("bg.png").convert()
-bg_width = bg.get_width()
+#bg_width = bg.get_width()
 
 move = 0
 #tiles = math.ceil(screen_width/bg_width) + 1
@@ -33,6 +36,7 @@ while run:
     #for i in range(0, tiles):
         #screen.blit(bg, (i * bg_width + move, 0))
     screen.blit(bg,(0,0))
+    screen.blit(player_image, (100, 100))
     #if abs(move) > bg_width:
         #move = 0
 
