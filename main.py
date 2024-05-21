@@ -1,5 +1,6 @@
 import pygame
 import math
+from dadish import Dadish
 
 
 
@@ -8,7 +9,7 @@ pygame.font.init()
 font = pygame.font.SysFont('Arial', 15)
 pygame.display.set_caption("Dadish")
 
-player_image = pygame.image.load("DADISH_image.png")
+#player_image = pygame.image.load("DADISH_image.png")
 #clock = pygame.time.Clock()
 #fps = 50
 
@@ -26,17 +27,23 @@ move = 0
 
 #go = False
 #go_back = False
-
+d = Dadish(100,300)
 run = True
 
 # -------- Main Program Loop -----------
 while run:
+    keys = pygame.key.get_pressed()  # checking pressed keys
+    if keys[pygame.K_d]:
+        d.move_direction("right")
+
+    elif keys[pygame.K_a]:
+        d.move_direction("left")
+
 
     #clock.tick(fps)
     #for i in range(0, tiles):
         #screen.blit(bg, (i * bg_width + move, 0))
-    screen.blit(bg,(0,0))
-    screen.blit(player_image, (100, 100))
+
     #if abs(move) > bg_width:
         #move = 0
 
@@ -51,6 +58,8 @@ while run:
         if event.type == pygame.QUIT:  # If user clicked close
             run = False
 
+    screen.blit(bg,(0,0))
+    screen.blit(d.image,d.rect)
     #keys = pygame.key.get_pressed()
 
 
