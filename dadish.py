@@ -2,24 +2,25 @@ import pygame
 
 
 
-class Dadish:
+class Dadish(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
+        super().__init__() #necessary because there are going to be multiple sprites and makes coding easier because this initializes attributes of parent class)
         self.x = x
         self.y = y
         self.image = pygame.image.load("DADISH_image.png")
-        #self.w = self.image.get_width()
-        #self.h = self.image.get_height()
-        self.image_size = self.image.get_size()
-        #self.image_size = pygame.transform.scale( self.image, ((self.w * 5),(self.h * 5)))
-        self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
-        self.delta = .2
+        self.rect = self.image.get_rect(center=(self.x, self.y))
+        self.velocity = 50
+        self.gravity = 4.5
 
-    def move_direction(self, direction):
-        if direction == "right":
-            self.x = self.x + self.delta
-        self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
-        if direction == "left":
-            self.x = self.x - self.delta
-        self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
+    def jump(self):
+        if self.rect.centery >=360:
+            while self.rect.centery- self.velocity > 40:
+                self.rect.centery -= 1
+    def apply_gravity(self):
+        if self.rect.centery <=360:
+            self.rect.centery += self.gravity
+    def update(self):
+        self.apply_gravity()
+
 

@@ -1,5 +1,6 @@
 import pygame
-import math
+from dadish import Dadish
+
 
 
 pygame.init()
@@ -19,6 +20,10 @@ game_speed = 150
 bg = pygame.image.load("bg.png").convert()
 ground_image = pygame.image.load("ground.png")
 ground = ground_image.convert_alpha()
+
+dadish_group = pygame.sprite.GroupSingle()
+radish = Dadish(50,360)
+dadish_group.add(radish)
 
 
 # background scrolling
@@ -46,6 +51,13 @@ while run:
         bg_x = 0
     screen.blit(bg, (bg_x, 0))
     screen.blit(bg, (bg_x + bg_width, 0))
+
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_SPACE:
+            radish.jump()
+
+    dadish_group.update()
+    dadish_group.draw(screen)
 
     if ground_x <= -screen_width:
         ground_x = 0
