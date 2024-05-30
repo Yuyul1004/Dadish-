@@ -22,7 +22,7 @@ ground_image = pygame.image.load("ground.png")
 ground = ground_image.convert_alpha()
 
 dadish_group = pygame.sprite.GroupSingle()
-radish = Dadish(50,360)
+radish = Dadish(45,313)
 dadish_group.add(radish)
 
 
@@ -33,9 +33,22 @@ bg_x = 0
 #ground scrolling
 ground_x = 0
 
-
-run = True
+not_run = True
+run = False
 # -------- Main Program Loop -----------
+while not_run:
+    for event in pygame.event.get():  # User did something
+        if event.type == pygame.QUIT:  # If user clicked close
+            not_run = False
+            run = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            run = True
+            not_run = False
+    screen.blit(bg, (0,0))
+    screen.blit(radish.image, radish.rect)
+    screen.blit(ground_image, (0,0))
+    pygame.display.update()
+
 while run:
 
     # --- Main event loop
