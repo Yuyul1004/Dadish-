@@ -22,7 +22,7 @@ ground_image = pygame.image.load("ground.png")
 ground = ground_image.convert_alpha()
 
 dadish_group = pygame.sprite.GroupSingle()
-radish = Dadish(45,313,)
+radish = Dadish(45,307)
 dadish_group.add(radish)
 
 
@@ -62,6 +62,8 @@ while run:
     delta_time = clock.tick(60) / 1000
     bg_x -= game_speed * delta_time
     ground_x -= game_speed * delta_time
+    game_speed += 0.025
+    print(game_speed)
 
     if bg_x < -bg_width:
         bg_x = 0
