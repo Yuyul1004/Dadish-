@@ -1,5 +1,7 @@
 import pygame
+import random
 from dadish import Dadish
+from pizza import Pizza
 
 
 
@@ -21,9 +23,11 @@ bg = pygame.image.load("bg.png").convert()
 ground_image = pygame.image.load("ground.png")
 ground = ground_image.convert_alpha()
 
+enemy_group = pygame.sprite.Group()
 dadish_group = pygame.sprite.GroupSingle()
 radish = Dadish(45,307)
 dadish_group.add(radish)
+pizza = Pizza (1000, 340)
 
 
 # background scrolling
@@ -44,10 +48,15 @@ while not_run:
         if event.type == pygame.MOUSEBUTTONDOWN:
             run = True
             not_run = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                run = True
+                not_run = False
     screen.blit(bg, (0,0))
     screen.blit(radish.image, radish.rect)
     screen.blit(ground_image, (0,0))
     pygame.display.update()
+    radish.jump() #jump once to signal start
 
 while run:
 
@@ -73,6 +82,9 @@ while run:
 
     dadish_group.update()
     dadish_group.draw(screen)
+
+    enemy_group.update()
+    enemy_group.draw(screen)
 
     if ground_x <= -screen_width:
         ground_x = 0
