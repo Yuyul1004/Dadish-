@@ -17,11 +17,16 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 #Variables
 clock = pygame.time.Clock()
 game_speed = 300
+display_message = "Space OR Left click to start AND jump"
 
 #Load images
 bg = pygame.image.load("bg.png").convert()
 ground_image = pygame.image.load("ground.png")
 ground = ground_image.convert_alpha()
+
+images = [
+    "enemie 1.png"
+]
 
 enemy_group = pygame.sprite.Group()
 dadish_group = pygame.sprite.GroupSingle()
@@ -29,6 +34,7 @@ radish = Dadish(45,307)
 dadish_group.add(radish)
 pizza = Pizza (1000, 340)
 
+display = font.render(display_message)
 
 # background scrolling
 bg_width = bg.get_width()
@@ -67,6 +73,8 @@ while run:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 radish.jump()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            radish.jump()
 
     delta_time = clock.tick(60) / 1000
     bg_x -= game_speed * delta_time
