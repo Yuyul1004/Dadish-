@@ -4,6 +4,16 @@ from dadish import Dadish
 from pizza import Pizza
 
 
+def should_spawn_enemy():
+    spawn_probability = 0.10  # 50% chance of spawning an enemy
+    return random.random() < spawn_probability
+
+def can_spawn_enemy(new_x, new_y, pizza_group, min_distance):
+    for pizza in pizza_group:
+        distance = ((new_x - pizza.rect.x) ** 2 + (new_y - pizza.rect.y) ** 2) ** 0.5
+        if distance < min_distance:
+            return False
+    return True
 
 pygame.init()
 pygame.font.init()
@@ -23,18 +33,23 @@ display_message = "Space OR Left click to start AND jump"
 bg = pygame.image.load("bg.png").convert()
 ground_image = pygame.image.load("ground.png")
 ground = ground_image.convert_alpha()
+pizza_image = pygame.transform.scale(pygame.image.load("enemie 1.png"), (100, 100))
 
-images = [
-    "enemie 1.png"
-]
 
-enemy_group = pygame.sprite.Group()
+
 dadish_group = pygame.sprite.GroupSingle()
 radish = Dadish(45,307)
 dadish_group.add(radish)
-pizza = Pizza (1000, 340)
 
-display = font.render(display_message)
+# Create a group for Pizza sprites
+pizza_group = pygame.sprite.Group()
+
+# Add Pizza sprites to the group
+pizza1 = Pizza(1500, 340, pizza_image)
+pizza_group.add(pizza1)
+
+
+#display = font.render(display_message)
 
 # background scrolling
 bg_width = bg.get_width()
@@ -91,8 +106,18 @@ while run:
     dadish_group.update()
     dadish_group.draw(screen)
 
-    enemy_group.update()
-    enemy_group.draw(screen)
+    for pizza in pizza_group:
+        pizza.rect.x -= game_speed * delta_time
+
+    if should_spawn_enemy():
+        new_pizza_x = 1500
+        new_pizza_y = 340
+        min_distance = 350
+
+        if can_spawn_enemy(new_pizza_x, new_pizza_y, pizza_group, min_distance):
+            new_pizza = Pizza(new_pizza_x, new_pizza_y, pizza_image)
+            pizza_group.add(new_pizza)
+    pizza_group.draw(screen)
 
     if ground_x <= -screen_width:
         ground_x = 0
